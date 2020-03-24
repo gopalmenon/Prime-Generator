@@ -1,11 +1,11 @@
 const FIRST_PRIME_LESS_ONE: u64 = 1;
 
-struct Prime {
+pub struct Prime {
     next_prime: u64,
 }
 
 impl Prime {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Prime {
             next_prime: FIRST_PRIME_LESS_ONE,
         }
@@ -26,7 +26,12 @@ impl Iterator for Prime {
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
-            self.next_prime += 1;
+            if self.next_prime == 1 || self.next_prime == 2 {
+                self.next_prime += 1;
+            } else {
+                self.next_prime += 2;
+            }
+
             if self.is_prime(self.next_prime) {
                 break;
             }
@@ -45,26 +50,26 @@ mod tests {
 
     #[test]
     fn second_prime() {
-        let mut prime_generator = super::Prime::new();
-        prime_generator.next();
-        assert_eq!(prime_generator.next().unwrap(), 3);
+        let mut prime = super::Prime::new();
+        prime.next();
+        assert_eq!(prime.next().unwrap(), 3);
     }
 
     #[test]
     fn tenth_prime() {
-        let mut prime_generator = super::Prime::new();
+        let mut prime = super::Prime::new();
         for _ in 1..10 {
-            prime_generator.next();
+            prime.next();
         }
-        assert_eq!(prime_generator.next().unwrap(), 29);
+        assert_eq!(prime.next().unwrap(), 29);
     }
 
     #[test]
     fn twentieth_prime() {
-        let mut prime_generator = super::Prime::new();
+        let mut prime = super::Prime::new();
         for _ in 1..20 {
-            prime_generator.next();
+            prime.next();
         }
-        assert_eq!(prime_generator.next().unwrap(), 71);
+        assert_eq!(prime.next().unwrap(), 71);
     }
 }
