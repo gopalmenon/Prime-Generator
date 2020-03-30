@@ -1,5 +1,17 @@
 const FIRST_PRIME_LESS_ONE: u64 = 1;
 
+/// Prime number struct that lets you call an iterator to generate primes
+///
+/// # Examples
+///
+/// ```
+/// use primes::Prime;
+/// let mut prime = Prime::new();
+/// for _ in 1..10 {
+///     prime.next();
+/// }
+/// assert_eq!(prime.next().unwrap(), 29);
+/// ```
 pub struct Prime {
     next_prime: u64,
 }
